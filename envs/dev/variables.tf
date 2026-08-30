@@ -1,41 +1,17 @@
-terraform {
-  required_version = ">= 1.11.0"
-
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 6.0"
-    }
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "~> 3.0"
-    }
-    tls = {
-      source  = "hashicorp/tls"
-      version = "~> 4.0"
-    }
-  }
+variable "db_password" {
+  description = "Master password for the RDS PostgreSQL database"
+  type        = string
+  sensitive   = true
 }
 
-provider "aws" {
-  region = "us-east-1"
-
-  default_tags {
-    tags = {
-      Project   = "pharma"
-      Env       = "dev"
-      ManagedBy = "terraform"
-    }
-  }
+variable "jwt_secret" {
+  description = "JWT signing secret for the application"
+  type        = string
+  sensitive   = true
 }
 
-provider "kubernetes" {
-  host                   = module.eks.cluster_endpoint
-  cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
-
-  exec {
-    api_version = "client.authentication.k8s.io/v1beta1"
-    command     = "aws"
-    args        = ["eks", "get-token", "--cluster-name", module.eks.cluster_name]
-  }
+variable "github_org" {
+  description = "GitHub username or organization that owns frontend and backend"
+  type        = string
+  default     = "zenpharma01"
 }
