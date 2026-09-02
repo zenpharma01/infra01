@@ -10,7 +10,7 @@ variable "jwt_secret" {
   sensitive   = true
 }
 
-variable "github_org" {
+variable "GH_org" {
   description = "GitHub username or organization that owns frontend and backend"
   type        = string
   default     = "zenpharma01"

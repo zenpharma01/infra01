@@ -23,7 +23,7 @@ variable "aws_account_id" {
   type        = string
 }
 
-variable "github_org" {
+variable "GH_org" {
   description = "GitHub organization or username that owns frontend and backend"
   type        = string
 }
