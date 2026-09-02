@@ -79,11 +79,12 @@ jobs:
 
       - name: Terraform Plan
         id: plan
+        env:
+          TF_VAR_db_password: ${{ secrets.DEV_DB_PASSWORD }}
+          TF_VAR_jwt_secret: ${{ secrets.DEV_JWT_SECRET }}
+          TF_VAR_GH_org: ${{ vars.GH_ORG }}
         run: |
           terraform plan \
-            -var="db_password=${{ secrets.DEV_DB_PASSWORD }}" \
-            -var="jwt_secret=${{ secrets.DEV_JWT_SECRET }}" \
-            -var="GH_org=${{ vars.GH_ORG }}" \
             -out=tfplan \
             -no-color
         continue-on-error: true
@@ -186,11 +187,12 @@ jobs:
         run: terraform init
 
       - name: Terraform Destroy
+        env:
+          TF_VAR_db_password: ${{ secrets.DEV_DB_PASSWORD }}
+          TF_VAR_jwt_secret: ${{ secrets.DEV_JWT_SECRET }}
+          TF_VAR_GH_org: ${{ vars.GH_ORG }}
         run: |
           terraform destroy \
-            -var="db_password=${{ secrets.DEV_DB_PASSWORD }}" \
-            -var="jwt_secret=${{ secrets.DEV_JWT_SECRET }}" \
-            -var="GH_org=${{ vars.GH_ORG }}" \
             -auto-approve \
             -no-color
 
